@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:voco_task_project/data/resources/route_manager/route_constant.dart';
-
 import 'package:voco_task_project/presentation/view/home_page.dart';
 import 'package:voco_task_project/presentation/view/login_page.dart';
 
@@ -10,14 +9,14 @@ class RouteManager {
     dynamic argument = routeSettings.arguments;
 
     switch (routeSettings.name) {
-      case RouteConstant.userRoute:
+      case RouteConstant.loginRoute:
         return MaterialPageRoute(
           builder: (context) {
             return LoginPage();
           },
         );
 
-      case RouteConstant.userRoute:
+      case RouteConstant.homeRoute:
         return MaterialPageRoute(
           builder: (context) {
             return HomePage();

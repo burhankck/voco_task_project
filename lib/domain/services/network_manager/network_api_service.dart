@@ -13,10 +13,13 @@ import 'package:voco_task_project/domain/services/network_manager/failure.dart';
 import 'package:voco_task_project/domain/services/network_manager/reflector.dart';
 
 class NetworkApiServices extends BaseApiService {
+
+  //Singleton pattern
   static final NetworkApiServices _instance = NetworkApiServices._init();
   static NetworkApiServices get instance => _instance;
   NetworkApiServices._init();
   dynamic responseJson;
+  //
 
   // Serializes json.
   dynamic jsonSerialize(dynamic jsonResponse) => json.decode(jsonResponse);
@@ -75,7 +78,7 @@ class NetworkApiServices extends BaseApiService {
         ResponseMessage.NO_INTERNET_CONNECTION,
       );
     } on Error catch (e) {
-      debugPrint("getApiResponse() method error: $e");
+      debugPrint("postApiResponse() method error: $e");
       throw Failure(
         ResponseCode.UNKNOWN,
         ResponseMessage.UNKNOWN,
