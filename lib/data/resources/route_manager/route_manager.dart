@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:voco_task_project/data/resources/route_manager/route_constant.dart';
-import 'package:voco_task_project/presentation/view/home_page.dart';
-import 'package:voco_task_project/presentation/view/login_page.dart';
+import 'package:voco_task_project/presentation/view/user_list_view.dart';
+import 'package:voco_task_project/presentation/view/login_view.dart';
 
 class RouteManager {
   Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -12,14 +12,14 @@ class RouteManager {
       case RouteConstant.loginRoute:
         return MaterialPageRoute(
           builder: (context) {
-            return LoginPage();
+            return LoginView();
           },
         );
 
       case RouteConstant.homeRoute:
         return MaterialPageRoute(
           builder: (context) {
-            return HomePage();
+            return UserListView();
           },
         );
 

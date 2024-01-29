@@ -2,20 +2,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:reflectable/reflectable.dart';
 import 'package:voco_task_project/app/voco_app.dart';
+import 'package:voco_task_project/main.reflectable.dart';
+import 'package:voco_task_project/presentation/controller/login/login_auth_controller.dart';
 
 void main() async {
-  // initializeReflectable();
+  initializeReflectable();
   _ensureInitialized();
   _deviceOrientation();
   runApp(
-    _buildIWalletApp(),
+    _buildProviderScope(),
   );
 }
 
-VocoApp _buildIWalletApp() => const VocoApp();
+ProviderScope _buildProviderScope() => ProviderScope(
+      child: _buildVocoApp(),
+    );
+
+VocoApp _buildVocoApp() => const VocoApp();
 
 WidgetsBinding _ensureInitialized() =>
     WidgetsFlutterBinding.ensureInitialized();
@@ -26,3 +33,4 @@ void _deviceOrientation() {
     DeviceOrientation.portraitDown,
   ]);
 }
+

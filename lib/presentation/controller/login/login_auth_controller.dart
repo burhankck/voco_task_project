@@ -5,9 +5,9 @@ import 'package:voco_task_project/presentation/model/login/login_request_model.d
 import 'package:voco_task_project/presentation/model/login/login_response_model.dart';
 import 'package:voco_task_project/presentation/service/login_service.dart';
 
-class LoginAuthState extends ChangeNotifier
+class LoginAuthStateController extends ChangeNotifier
     with _ProviderConstant, TokenCacheManager {
-  Future<void> userAuth({
+  Future<bool> userAuth({
     required String userEmail,
     required String password,
     required int page,
@@ -25,9 +25,29 @@ class LoginAuthState extends ChangeNotifier
       if (responseValue != null) {
         _isLoadingChange();
         loginRespModel = responseValue;
-        saveToken(token: responseValue.token);
+
+        isAuthSuccess = _isAuthSuccessControl(token: responseValue.token);
+        notifyListeners();
+        saveTokenToStorage(token: responseValue.token);
+        return isAuthSuccess;
       }
-    }).onError((error, stackTrace) {});
+      notifyListeners();
+      return isAuthSuccess;
+    }).onError((error, stackTrace) {
+      isAuthSuccess = false;
+      _isLoadingChange();
+      notifyListeners();
+      return isAuthSuccess;
+    });
+    return isAuthSuccess;
+  }
+
+  bool _isAuthSuccessControl({required String? token}) {
+    if (token != null && token.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   LoginRequestModel _createLoginReqModel({
@@ -42,13 +62,22 @@ class LoginAuthState extends ChangeNotifier
 
   void _isLoadingChange() {
     isLoading = !isLoading;
+    notifyListeners();
+  }
+
+  void changeIsSecure() {
+    isSecure = !isSecure;
+    notifyListeners();
   }
 }
 
 mixin _ProviderConstant {
-  late final RestfulErrorModel? error;
+  RestfulErrorModel? error;
   final LoginService _loginService = LoginService();
   bool isLoading = false;
   bool isError = false;
-  LoginResponseModel? loginRespModel;
+  bool isAuthSuccess = false;
+  bool isSecure = false;
+  LoginResponseModel?
+      loginRespModel; //LoginProvider uzerinden, tum projede erisim saglanabilir.
 }
