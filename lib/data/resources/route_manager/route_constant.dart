@@ -1,3 +1,4 @@
 class RouteConstant {
-  static const String userRoute = "/userRoute";
+  static const String loginRoute = "/loginRoute";
+  static const String homeRoute = "/homeRoute";
 }
