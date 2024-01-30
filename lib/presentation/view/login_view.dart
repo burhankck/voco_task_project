@@ -4,14 +4,12 @@ import 'package:voco_task_project/app/voco_app.dart';
 import 'package:voco_task_project/data/resources/route_manager/route_constant.dart';
 import 'package:voco_task_project/main.dart';
 
-
-
 class LoginView extends ConsumerStatefulWidget {
   @override
-  ConsumerState<LoginView> createState() => _LoginPageState();
+  ConsumerState<LoginView> createState() => _ConsumerLoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
+class _ConsumerLoginPageState extends ConsumerState<LoginView> with _PageProperties {
   @override
   void initState() {
     super.initState();
@@ -53,7 +51,13 @@ class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
                 decoration: BoxDecoration(
                     color: Colors.grey.shade100,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: TextField(
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş geçilemez.';
+                    }
+                    return null;
+                  },
                   autofillHints: const [AutofillHints.username],
                   keyboardType: TextInputType.name,
                   controller: emailController,
@@ -75,7 +79,13 @@ class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
                 decoration: BoxDecoration(
                     color: Colors.grey.shade100,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: TextField(
+                child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bu alan boş geçilemez.';
+                    }
+                    return null;
+                  },
                   autofillHints: const [AutofillHints.password],
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: ref.watch(LoginProvider).isSecure,
@@ -85,7 +95,7 @@ class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
                   decoration: InputDecoration(
                       labelText: 'Şifre',
                       prefixIcon: Icon(
-                        Icons.password_sharp,
+                        Icons.key_outlined,
                         color: Colors.purple.shade600,
                       ),
                       suffix: IconButton(
@@ -94,11 +104,14 @@ class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
                         },
                         icon: Consumer(
                           builder: (context, WidgetRef ref, child) {
-                            return Icon(
-                                color: Colors.purple.shade500,
-                                ref.watch(LoginProvider).isSecure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off);
+                            return ref.watch(LoginProvider).isSecure
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off_rounded);
+                            // return Icon(
+                            //     color: Colors.purple.shade500,
+                            //     ref.watch(LoginProvider).isSecure
+                            //         ? Icons.visibility
+                            //         : Icons.visibility_off);
                           },
                         ),
                       )),
@@ -158,6 +171,8 @@ class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
 
 mixin _PageProperties {
   final String _obsureText = "*";
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: "eve.holt@reqres.in");
+  final TextEditingController passwordController =
+      TextEditingController(text: "cityslicka");
 }

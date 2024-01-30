@@ -13,6 +13,7 @@ class LoginAuthStateController extends ChangeNotifier
     required int page,
   }) async {
     _isLoadingChange();
+
     await _loginService
         .userAuthService(
       loginRequestModel: _createLoginReqModel(
