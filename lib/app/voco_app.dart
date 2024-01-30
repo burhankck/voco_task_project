@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:voco_task_project/data/resources/route_manager/route_constant.dart';
 import 'package:voco_task_project/data/resources/route_manager/route_manager.dart';
 import 'package:voco_task_project/presentation/controller/login/login_auth_controller.dart';
@@ -8,19 +10,22 @@ import 'package:voco_task_project/presentation/controller/login/login_token_cach
 import 'package:voco_task_project/presentation/controller/user_list/user_list_controller.dart';
 
 class VocoApp extends StatefulWidget {
-  const VocoApp({super.key});
+  const VocoApp({
+    Key? key,
+    required this.isAuth,
+  }) : super(key: key);
+
+  final bool isAuth;
 
   @override
   State<VocoApp> createState() => _VocoAppState();
 }
 
-class _VocoAppState extends State<VocoApp>
-    with TokenCacheManager, _AppProperties {
+class _VocoAppState extends State<VocoApp> with TokenCacheManager {
   final RouteManager routeManager = RouteManager();
 
   @override
   void initState() {
-    _isAuthController();
     super.initState();
   }
 
@@ -33,22 +38,12 @@ class _VocoAppState extends State<VocoApp>
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: routeManager.getRoute,
-        initialRoute: _getRoute(),
+        initialRoute: _getRoute(isAuth: widget.isAuth),
       ),
     );
   }
 
-  Future<void> _isAuthController() async {
-    isAuth = false;
-    String? token = await getTokenFromStorage();
-    if (token != null && token.isNotEmpty) {
-      isAuth = true;
-    } else {
-      isAuth = false;
-    }
-  }
-
-  String _getRoute() {
+  String _getRoute({required bool isAuth}) {
     if (isAuth) {
       return RouteConstant.homeRoute;
     } else {
@@ -57,11 +52,7 @@ class _VocoAppState extends State<VocoApp>
   }
 }
 
-//Tum uygulamada erisim saglanmasi icin provide edildi.
-final LoginProvider = StateProvider((ref) => LoginAuthStateController());
-final UserListProvider =
-    ChangeNotifierProvider((ref) => UserListStateController());
 
-mixin _AppProperties {
-  bool isAuth = false;
-}
+// mixin _AppProperties {
+//   bool isAuth = false;
+// }
