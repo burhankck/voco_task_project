@@ -6,10 +6,10 @@ import 'package:voco_task_project/main.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   @override
-  ConsumerState<LoginView> createState() => _ConsumerLoginPageState();
+  ConsumerState<LoginView> createState() => _LoginPageState();
 }
 
-class _ConsumerLoginPageState extends ConsumerState<LoginView> with _PageProperties {
+class _LoginPageState extends ConsumerState<LoginView> with _PageProperties {
   @override
   void initState() {
     super.initState();
@@ -93,28 +93,12 @@ class _ConsumerLoginPageState extends ConsumerState<LoginView> with _PagePropert
                   controller: passwordController,
                   maxLength: 35,
                   decoration: InputDecoration(
-                      labelText: 'Şifre',
-                      prefixIcon: Icon(
-                        Icons.key_outlined,
-                        color: Colors.purple.shade600,
-                      ),
-                      suffix: IconButton(
-                        onPressed: () {
-                          ref.watch(LoginProvider).changeIsSecure();
-                        },
-                        icon: Consumer(
-                          builder: (context, WidgetRef ref, child) {
-                            return ref.watch(LoginProvider).isSecure
-                                ? Icon(Icons.visibility)
-                                : Icon(Icons.visibility_off_rounded);
-                            // return Icon(
-                            //     color: Colors.purple.shade500,
-                            //     ref.watch(LoginProvider).isSecure
-                            //         ? Icons.visibility
-                            //         : Icons.visibility_off);
-                          },
-                        ),
-                      )),
+                    labelText: 'Şifre',
+                    prefixIcon: Icon(
+                      Icons.key_outlined,
+                      color: Colors.purple.shade600,
+                    ),
+                  ),
                   // inputFormatters: [
                   //   LengthLimitingTextInputFormatter(15),
                   // ],
